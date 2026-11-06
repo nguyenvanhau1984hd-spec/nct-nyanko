@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: nct-nyanko
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 4 --timeout 180 --bind 0.0.0.0:$PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: NCT_SECRET_KEY
+        generateValue: true

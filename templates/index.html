@@ -1,0 +1,32 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NCT Nyanko Editor</title><link rel="stylesheet" href="/static/style.css"></head><body>
+<header><div class="brand">NCT <span>NYANKO</span></div><div class="sub">Custom Save Editor</div></header>
+<main>
+<section class="card load"><h2>📥 세이브 불러오기</h2><div class="grid"><input id="country" value="kr" placeholder="국가 코드"><input id="transfer" placeholder="이어하기 코드"><input id="confirmation" placeholder="인증번호"></div><button onclick="loadSave()">불러오기</button><div id="summary" class="summary">아직 세이브가 없습니다.</div></section>
+<section class="layout">
+<aside class="card menu"><h3>편집 메뉴</h3><div id="menus"></div></aside>
+<section class="card editor"><h2 id="title">항목을 선택하세요</h2><div id="panel"><p>왼쪽 메뉴에서 원하는 기능을 선택하세요.</p></div><div id="log"></div></section>
+</section>
+</main>
+<footer>NCT NYANKO · BCSFE 기반 비공식 커스텀 편집기</footer>
+<script>
+const cats={{ categories|tojson }};
+const el=id=>document.getElementById(id);
+function msg(t,ok=true){el('log').textContent=(ok?'✅ ':'❌ ')+t;}
+function menu(){el('menus').innerHTML=Object.entries(cats).map(([k,v])=>`<div class="group"><b>${k}</b>${v.map(x=>`<button class="item" onclick="selectItem(${JSON.stringify(x)})">${x}</button>`).join('')}</div>`).join('');}
+function selectItem(item){el('title').textContent=item; let p=el('panel');
+if(['통조림','XP','NP','리더십/통솔력','냥코 티켓','레어 티켓','플래티넘 티켓','플래티넘 조각','럭키 티켓','레전드 티켓','럭키 티켓G','스피드 업','트레저 레이더','고양이 도령','야옹컴','고양이 박사','스냥이퍼','캣츠아이 EX','캣츠아이 레어','캣츠아이 슈퍼 레어','캣츠아이 울트라 슈퍼 레어','캣츠아이 레전드','캣츠아이 다크'].includes(item)) p.innerHTML=`<div class="row"><input id="value" type="number" min="0" placeholder="수량"><button onclick="applyItem(${JSON.stringify(item)})">적용</button></div>`;
+else if(item==='전체 레벨 설정') p.innerHTML='<div class="row"><input id="base" type="number" min="1" placeholder="기본 레벨"><input id="plus" type="number" min="0" placeholder="플러스 레벨"><button onclick="applyAllLevel()">전체 적용</button></div>';
+else if(item==='캐릭터 ID로 확인'||item==='캐릭터 이름으로 찾기') p.innerHTML='<div class="row"><input id="catid" type="number" min="0" placeholder="캐릭터 ID"><button onclick="catInfo()">확인</button></div>';
+else if(item==='전체 특정 본능 MAX') p.innerHTML='<div class="row"><input id="talent" placeholder="본능 이름"><button onclick="applyTalent()">적용</button></div>';
+else if(item==='캐릭터 가격 수정'||item==='소환 쿨타임 수정') p.innerHTML='<p class="warn">현재 BCSFE 세이브 API에서 실제 저장 필드가 확인되지 않은 항목입니다. 임의 값으로 성공 처리하지 않습니다.</p>';
+else p.innerHTML=`<button onclick="applyAction(${JSON.stringify(item)})">실행</button>`;
+}
+async function post(url,data){const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const j=await r.json();if(!j.ok)throw new Error(j.error);return j;}
+async function loadSave(){try{const j=await post('/api/load',{country:el('country').value,transfer:el('transfer').value,confirmation:el('confirmation').value});el('summary').textContent=JSON.stringify(j.summary,null,2);msg('세이브 불러오기 완료')}catch(e){msg(e.message,false)}}
+async function applyItem(item){try{const j=await post('/api/item',{item,value:el('value').value});msg(j.message)}catch(e){msg(e.message,false)}}
+async function applyAction(item){try{const j=await post('/api/action',{item});msg(j.message)}catch(e){msg(e.message,false)}}
+async function applyAllLevel(){try{const j=await post('/api/cat/level',{id:0,base:null,plus:null});}catch(e){} alert('전체 레벨 설정은 아래 캐릭터별 레벨 입력 API를 사용하세요. 메뉴 UI를 확장할 수 있습니다.');}
+async function catInfo(){try{const j=await post('/api/cat/info',{id:el('catid').value});msg(`${j.info.name} · ID ${j.info.id} · 해금 ${j.info.unlocked?'O':'X'}`)}catch(e){msg(e.message,false)}}
+async function applyTalent(){try{const j=await post('/api/action',{item:'전체 특정 본능 MAX'});msg(j.message)}catch(e){msg(e.message,false)}}
+menu();
+</script></body></html>

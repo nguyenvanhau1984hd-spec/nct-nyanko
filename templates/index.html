@@ -1,7 +1,19 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NCT Nyanko Editor</title><link rel="stylesheet" href="/static/style.css"></head><body>
-<header><div class="brand">NCT <span>NYANKO</span></div><div class="sub">Custom Save Editor</div></header>
+<header>
+<div class="brand">NCT <span>NYANKO</span></div>
+<div class="sub">Custom Save Editor</div>
+<a href="https://discord.gg/TP75TsSQf" target="_blank" rel="noopener noreferrer"
+style="display:inline-block;margin:12px;padding:11px 18px;background:#5865F2;color:white;text-decoration:none;border-radius:9px;font-weight:bold">
+💬 디스코드 참여</a>
+</header>
 <main>
-<section class="card load"><h2>📥 세이브 불러오기</h2><div class="grid"><input id="country" value="kr" placeholder="국가 코드"><input id="transfer" placeholder="이어하기 코드"><input id="confirmation" placeholder="인증번호"></div><button onclick="loadSave()">불러오기</button><div id="summary" class="summary">아직 세이브가 없습니다.</div></section>
+<section class="card load"><h2>📥 세이브 불러오기</h2><div class="grid"><input id="country" value="kr" placeholder="국가 코드"><input id="transfer" placeholder="이어하기 코드"><input id="confirmation" placeholder="인증번호"></div><button onclick="loadSave()">불러오기</button><div id="summary" class="summary">아직 세이브가 없습니다.</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+<button onclick="uploadSave()">💾 수정 세이브 저장 및 업로드</button>
+<a href="https://discord.gg/TP75TsSQf" target="_blank" rel="noopener noreferrer"
+style="display:inline-block;padding:11px 16px;background:#5865F2;color:white;text-decoration:none;border-radius:8px">
+디스코드 참여</a>
+</div></section>
 <section class="layout">
 <aside class="card menu"><h3>편집 메뉴</h3><div id="menus"></div></aside>
 <section class="card editor"><h2 id="title">항목을 선택하세요</h2><div id="panel"><p>왼쪽 메뉴에서 원하는 기능을 선택하세요.</p></div><div id="log"></div></section>
@@ -23,10 +35,49 @@ else p.innerHTML=`<button onclick="applyAction(${JSON.stringify(item)})">실행<
 }
 async function post(url,data){const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const j=await r.json();if(!j.ok)throw new Error(j.error);return j;}
 async function loadSave(){try{const j=await post('/api/load',{country:el('country').value,transfer:el('transfer').value,confirmation:el('confirmation').value});el('summary').textContent=JSON.stringify(j.summary,null,2);msg('세이브 불러오기 완료')}catch(e){msg(e.message,false)}}
+async function uploadSave(){
+try{
+if(!el('transfer').value.trim() || !el('confirmation').value.trim()){
+throw new Error('먼저 세이브를 불러오세요.');
+}
+if(!confirm('수정된 세이브를 게임 서버에 업로드할까요?')) return;
+const j=await post('/api/save/upload',{});
+el('transfer').value=j.transfer;
+el('confirmation').value=j.confirmation;
+el('summary').textContent +=
+'\\n\\n✅ 업로드 완료\\n새 이어하기 코드: '+j.transfer+
+'\\n새 인증번호: '+j.confirmation+
+'\\n새 코드를 안전한 곳에 보관하세요.';
+msg('세이브 업로드 및 새 코드 발급 완료');
+}catch(e){msg(e.message,false)}
+}
 async function applyItem(item){try{const j=await post('/api/item',{item,value:el('value').value});msg(j.message)}catch(e){msg(e.message,false)}}
 async function applyAction(item){try{const j=await post('/api/action',{item});msg(j.message)}catch(e){msg(e.message,false)}}
-async function applyAllLevel(){try{const j=await post('/api/cat/level',{id:0,base:null,plus:null});}catch(e){} alert('전체 레벨 설정은 아래 캐릭터별 레벨 입력 API를 사용하세요. 메뉴 UI를 확장할 수 있습니다.');}
+async function applyAllLevel(){
+  const base = prompt('캐릭터 기본 레벨을 입력하세요.');
+  if(base === null) return;
+  const plus = prompt('플러스 레벨을 입력하세요. 변경하지 않으려면 비워두세요.');
+  if(plus === null) return;
+  try {
+    const j = await post('/api/cats/level/all', {
+      base: base === '' ? null : Number(base),
+      plus: plus === '' ? null : Number(plus)
+    });
+    msg(j.message || '적용 요청 완료');
+  } catch(e) {
+    msg(e.message, false);
+  }
+});}catch(e){} alert('전체 레벨 설정은 아래 캐릭터별 레벨 입력 API를 사용하세요. 메뉴 UI를 확장할 수 있습니다.');}
 async function catInfo(){try{const j=await post('/api/cat/info',{id:el('catid').value});msg(`${j.info.name} · ID ${j.info.id} · 해금 ${j.info.unlocked?'O':'X'}`)}catch(e){msg(e.message,false)}}
-async function applyTalent(){try{const j=await post('/api/action',{item:'전체 특정 본능 MAX'});msg(j.message)}catch(e){msg(e.message,false)}}
+async function applyTalent(){
+  const name = prompt('최대 적용할 본능 이름을 입력하세요.');
+  if(!name) return;
+  try {
+    const j = await post('/api/cat/talent/max', {name});
+    msg(j.message || '적용 요청 완료');
+  } catch(e) {
+    msg(e.message, false);
+  }
+});msg(j.message)}catch(e){msg(e.message,false)}}
 menu();
 </script></body></html>

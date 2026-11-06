@@ -151,3 +151,45 @@ if __name__ == '__main__':
     host=os.getenv('NCT_HOST','127.0.0.1')
     port=int(os.getenv('PORT','5000'))
     app.run(host=host,port=port,debug=False)
+
+
+@app.post("/api/cat/talents")
+def api_cat_talents():
+    d = request.get_json(force=True)
+    return jsonify({"message": set_cat_talents_sync(
+        handler(), int(d["id"]), bool(d.get("max_level", True))
+    )})
+
+@app.get("/api/talents")
+def api_talents():
+    return jsonify({"talents": get_all_talent_names_sync(handler())})
+
+@app.post("/api/cat/talent/max")
+def api_cat_talent_max():
+    d = request.get_json(force=True)
+    count = set_all_specific_talent_max_sync(handler(), str(d["name"]))
+    return jsonify({"message": f"{count}개 캐릭터에 적용했습니다.", "count": count})
+
+@app.post("/api/cats/level/all")
+def api_cats_level_all():
+    d = request.get_json(force=True)
+    count = set_all_level_sync(handler(), d.get("base"), d.get("plus"))
+    return jsonify({"message": f"{count}개 캐릭터에 적용했습니다.", "count": count})
+
+@app.post("/api/cats/level/max")
+def api_cats_level_max():
+    d = request.get_json(force=True)
+    count = set_all_max_level_sync(handler(), bool(d.get("plus", False)))
+    return jsonify({"message": f"{count}개 캐릭터에 적용했습니다.", "count": count})
+
+@app.post("/api/cats/form/all")
+def api_cats_form_all():
+    d = request.get_json(force=True)
+    count = set_all_form_sync(handler(), int(d["form"]))
+    return jsonify({"message": f"{count}개 캐릭터에 적용했습니다.", "count": count})
+
+@app.post("/api/cats/talents/all")
+def api_cats_talents_all():
+    d = request.get_json(force=True)
+    count = set_all_talents_sync(handler(), bool(d.get("max_level", True)))
+    return jsonify({"message": f"{count}개 캐릭터에 적용했습니다.", "count": count})

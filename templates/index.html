@@ -3,253 +3,126 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
 <title>NCT NYANKO Custom</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- background:#111;
- color:#eee;
- font-family:Arial,sans-serif;
- min-height:100vh
-}
+body{margin:0;background:#0d0d0f;color:#eee;font-family:Arial,sans-serif}
 button,input,select{font:inherit}
 button{cursor:pointer}
-.top{
- height:70px;
- display:flex;
- align-items:center;
- gap:28px;
- padding:0 24px;
- background:#171717;
- border-bottom:1px solid #333;
- position:sticky;
- top:0;
- z-index:5
-}
-.logo{font-size:22px;font-weight:800;white-space:nowrap}
-.nav{display:flex;gap:8px;overflow:auto}
-.nav button{
- background:#242424;
- color:#ddd;
- border:1px solid #383838;
- border-radius:8px;
- padding:10px 18px
-}
-.nav button.active{background:#eee;color:#111}
-.layout{
- display:grid;
- grid-template-columns:220px minmax(500px,1fr) 280px;
- gap:16px;
- padding:16px;
- max-width:1600px;
- margin:auto
-}
-.panel{
- background:#191919;
- border:1px solid #303030;
- border-radius:12px;
- padding:16px
-}
-.side button{
- width:100%;
- margin-bottom:8px;
- padding:13px;
- text-align:left;
- background:#222;
- color:#ddd;
- border:1px solid #333;
- border-radius:8px
-}
-.side button.active{background:#eee;color:#111}
+.top{height:64px;background:#151518;border-bottom:1px solid #303036;display:flex;align-items:center;padding:0 18px;gap:20px;position:sticky;top:0;z-index:10}
+.logo{font-weight:900;font-size:20px;white-space:nowrap}
+.nav{display:flex;gap:6px;overflow:auto}
+.nav button,.side button{border:1px solid #34343a;background:#202025;color:#ddd;border-radius:7px;padding:10px 15px}
+.nav button.active,.side button.active{background:#eee;color:#111}
+.discord{margin-left:auto;background:#5865f2!important;color:#fff!important;border:0!important;font-weight:700}
+.layout{display:grid;grid-template-columns:210px minmax(500px,1fr) 250px;gap:14px;max-width:1600px;margin:auto;padding:14px}
+.panel{background:#151518;border:1px solid #303036;border-radius:10px;padding:14px}
+.side h3{margin:0 0 12px}
+.side button{width:100%;display:block;text-align:left;margin-bottom:7px}
+.card{background:#1d1d21;border:1px solid #34343a;border-radius:8px;padding:14px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+label{display:block;font-size:12px;color:#aaa;margin-bottom:5px}
+input,select{width:100%;padding:10px;border-radius:6px;border:1px solid #414149;background:#0d0d0f;color:#fff}
+.action{border:0;border-radius:6px;background:#eee;color:#111;font-weight:700;padding:11px 14px;margin-top:10px;width:100%}
+.blue{background:#315d91;color:#fff}
+.green{background:#28613a;color:#fff}
+.red{background:#743838;color:#fff}
+.dark{background:#303036;color:#fff}
+.msg{margin-top:10px;background:#0d0d0f;border:1px solid #34343a;border-radius:6px;padding:10px;white-space:pre-wrap;min-height:20px}
+.status{display:flex;justify-content:space-between;border-bottom:1px solid #303036;padding:10px 0}
+.status:last-child{border:0}
+.small{font-size:12px;color:#999;line-height:1.6}
+.hidden{display:none!important}
 h1,h2,h3{margin-top:0}
-.card{
- background:#222;
- border:1px solid #333;
- border-radius:10px;
- padding:15px;
- margin-bottom:12px
-}
-.grid{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:10px
-}
-label{
- display:block;
- font-size:13px;
- color:#aaa;
- margin-bottom:6px
-}
-input,select{
- width:100%;
- background:#111;
- color:#eee;
- border:1px solid #444;
- border-radius:7px;
- padding:11px
-}
-.action{
- width:100%;
- border:0;
- border-radius:8px;
- padding:12px;
- background:#eee;
- color:#111;
- font-weight:700;
- margin-top:10px
-}
-.action.dark{background:#333;color:#eee}
-.action.green{background:#263d2b;color:#bfffc9}
-.action.blue{background:#26384d;color:#b9dcff}
-.message{
- margin-top:10px;
- padding:10px;
- border-radius:7px;
- background:#111;
- border:1px solid #333;
- white-space:pre-wrap
-}
-.status{
- display:flex;
- justify-content:space-between;
- padding:10px 0;
- border-bottom:1px solid #303030
-}
-.status:last-child{border-bottom:0}
-.small{font-size:12px;color:#999}
-.hidden{display:none}
-@media(max-width:1000px){
- .layout{grid-template-columns:180px 1fr}
- .right{display:none}
-}
-@media(max-width:700px){
- .top{height:auto;align-items:flex-start;flex-direction:column;padding:14px}
- .layout{grid-template-columns:1fr;padding:10px}
- .side{display:none}
- .grid{grid-template-columns:1fr}
-}
+@media(max-width:1000px){.layout{grid-template-columns:180px 1fr}.right{display:none}}
+@media(max-width:700px){.top{height:auto;flex-wrap:wrap;padding:10px}.discord{margin-left:0}.layout{display:block;padding:8px}.side{display:none}.grid,.grid3{grid-template-columns:1fr}.main{margin-top:8px}}
 </style>
 </head>
-
 <body>
 
 <header class="top">
 <div class="logo">🐱 NCT NYANKO</div>
 <nav class="nav">
-<button class="active" onclick="menu('save',this)">세이브</button>
-<button onclick="menu('cats',this)">캐릭터</button>
-<button onclick="menu('items',this)">재화 / 아이템</button>
-<button onclick="menu('talents',this)">본능</button>
-<button onclick="menu('story',this)">스토리</button>
+<button class="active" onclick="show('save',this)">세이브</button>
+<button onclick="show('cats',this)">캐릭터</button>
+<button onclick="show('items',this)">재화/아이템</button>
+<button onclick="show('talents',this)">본능</button>
+<button onclick="show('bulk',this)">전체 편집</button>
+<button onclick="show('story',this)">스토리</button>
+<button onclick="show('upload',this)">저장</button>
 </nav>
+<a class="discord" href="https://discord.gg/TP75TsSQf" target="_blank">💬 Discord 참여</a>
 </header>
 
 <div class="layout">
 
 <aside class="panel side">
 <h3>편집 메뉴</h3>
-<button class="active" onclick="menu('save',this)">💾 세이브</button>
-<button onclick="menu('cats',this)">🐱 캐릭터</button>
-<button onclick="menu('items',this)">💰 재화 / 아이템</button>
-<button onclick="menu('talents',this)">🧠 본능</button>
-<button onclick="menu('story',this)">📖 스토리</button>
-<button onclick="menu('upload',this)">⬆️ 저장 / 업로드</button>
+<button class="active" onclick="show('save',this)">💾 세이브</button>
+<button onclick="show('cats',this)">🐱 캐릭터</button>
+<button onclick="show('items',this)">💰 재화 / 아이템</button>
+<button onclick="show('talents',this)">🧠 본능</button>
+<button onclick="show('bulk',this)">⚙️ 전체 편집</button>
+<button onclick="show('story',this)">📖 스토리</button>
+<button onclick="show('upload',this)">⬆️ 저장 / 업로드</button>
 </aside>
 
 <main class="panel">
 
 <section id="save">
-<h2>세이브 불러오기</h2>
-
+<h2>💾 세이브 불러오기</h2>
 <div class="card">
-<div class="grid">
-<div>
-<label>국가</label>
-<select id="country">
-<option value="kr">KR</option>
-<option value="jp">JP</option>
-<option value="en">EN</option>
-</select>
+<div class="grid3">
+<div><label>국가</label><select id="country"><option value="kr">KR</option><option value="jp">JP</option><option value="en">EN</option></select></div>
+<div><label>이어하기 코드</label><input id="transfer" placeholder="이어하기 코드"></div>
+<div><label>인증번호</label><input id="confirmation" placeholder="인증번호"></div>
 </div>
-
-<div>
-<label>이어하기 코드</label>
-<input id="transfer" placeholder="이어하기 코드">
-</div>
-
-<div>
-<label>인증 코드</label>
-<input id="confirmation" placeholder="인증 코드">
-</div>
-</div>
-
 <button class="action blue" onclick="loadSave()">세이브 불러오기</button>
-<div id="loadMessage" class="message">세이브를 불러오면 계정 정보가 표시됩니다.</div>
+<div id="loadMsg" class="msg">아직 세이브가 없습니다.</div>
 </div>
 </section>
 
 <section id="cats" class="hidden">
-<h2>🐱 캐릭터 커스텀</h2>
+<h2>🐱 캐릭터 편집</h2>
 
 <div class="card">
 <h3>캐릭터 레벨</h3>
-<div class="grid">
-<div>
-<label>캐릭터 ID</label>
-<input id="catId" type="number" min="0" placeholder="예: 1">
+<div class="grid3">
+<div><label>캐릭터 ID</label><input id="catId" type="number" min="0" placeholder="예: 1"></div>
+<div><label>기본 레벨</label><input id="catBase" type="number" placeholder="변경 안 함"></div>
+<div><label>플러스 레벨</label><input id="catPlus" type="number" placeholder="변경 안 함"></div>
 </div>
-<div>
-<label>기본 레벨</label>
-<input id="catBase" type="number" placeholder="변경하지 않음">
-</div>
-<div>
-<label>플러스 레벨</label>
-<input id="catPlus" type="number" placeholder="변경하지 않음">
-</div>
-</div>
-<button class="action" onclick="setCatLevel()">레벨 적용</button>
+<button class="action" onclick="catLevel()">적용</button>
 </div>
 
 <div class="card">
-<h3>캐릭터 상태</h3>
-<div class="grid">
-<button class="action green" onclick="setOwned(true)">보유</button>
-<button class="action dark" onclick="setOwned(false)">미보유</button>
+<h3>보유 / 진화</h3>
+<div class="grid3">
+<button class="action green" onclick="catOwned(true)">보유</button>
+<button class="action dark" onclick="catOwned(false)">미보유</button>
+<button class="action blue" onclick="catForm(3)">3진</button>
 </div>
-</div>
-
-<div class="card">
-<h3>진화</h3>
-<div class="grid">
-<button class="action blue" onclick="setForm(3)">3진 적용</button>
-<button class="action blue" onclick="setForm(4)">4진 적용</button>
-</div>
+<button class="action blue" onclick="catForm(4)">4진</button>
 </div>
 
 <div class="card">
 <h3>캐릭터 정보</h3>
-<button class="action dark" onclick="catInfo()">정보 조회</button>
-<div id="catMessage" class="message"></div>
+<button class="action dark" onclick="catInfo()">조회</button>
+<div id="catMsg" class="msg"></div>
 </div>
 </section>
 
 <section id="items" class="hidden">
 <h2>💰 재화 / 아이템</h2>
-
 <div class="card">
 <div class="grid">
-<div>
-<label>항목</label>
-<input id="itemName" placeholder="예: 통조림">
+<div><label>항목 이름</label><input id="itemName" placeholder="예: 통조림"></div>
+<div><label>수량</label><input id="itemValue" type="number" placeholder="숫자"></div>
 </div>
-<div>
-<label>수량</label>
-<input id="itemValue" type="number" placeholder="숫자">
-</div>
-</div>
-<button class="action" onclick="applyItem()">적용</button>
-<div id="itemMessage" class="message"></div>
+<button class="action blue" onclick="itemApply()">적용</button>
+<div id="itemMsg" class="msg"></div>
 </div>
 </section>
 
@@ -257,47 +130,72 @@ input,select{
 <h2>🧠 본능</h2>
 
 <div class="card">
+<h3>캐릭터 본능</h3>
 <div class="grid">
-<div>
-<label>캐릭터 ID</label>
-<input id="talentCatId" type="number" placeholder="예: 1">
+<div><label>캐릭터 ID</label><input id="talentCatId" type="number" placeholder="예: 1"></div>
+<div><label>설정</label><select id="talentMax"><option value="true">본능 MAX</option><option value="false">MAX 해제</option></select></div>
 </div>
-<div>
-<label>본능 MAX</label>
-<select id="talentMax">
-<option value="true">MAX</option>
-<option value="false">해제</option>
-</select>
+<button class="action" onclick="talentApply()">적용</button>
+<div id="talentMsg" class="msg"></div>
+</div>
+
+<div class="card">
+<h3>특정 본능 전체 MAX</h3>
+<input id="talentName" placeholder="본능 이름">
+<button class="action blue" onclick="specificTalent()">전체 적용</button>
+</div>
+</section>
+
+<section id="bulk" class="hidden">
+<h2>⚙️ 전체 캐릭터 편집</h2>
+
+<div class="card">
+<h3>전체 캐릭터 레벨</h3>
+<div class="grid">
+<div><label>기본 레벨</label><input id="allBase" type="number" placeholder="예: 60"></div>
+<div><label>플러스 레벨</label><input id="allPlus" type="number" placeholder="예: 90"></div>
+</div>
+<button class="action blue" onclick="allLevel()">전체 적용</button>
+</div>
+
+<div class="card">
+<h3>전체 캐릭터 최대 레벨</h3>
+<button class="action green" onclick="allMax(false)">기본 최대</button>
+<button class="action blue" onclick="allMax(true)">플러스 최대</button>
+</div>
+
+<div class="card">
+<h3>전체 진화</h3>
+<div class="grid">
+<button class="action blue" onclick="allForm(3)">전체 3진</button>
+<button class="action blue" onclick="allForm(4)">전체 4진</button>
 </div>
 </div>
 
-<button class="action" onclick="applyTalent()">본능 적용</button>
-<div id="talentMessage" class="message"></div>
+<div class="card">
+<h3>전체 본능</h3>
+<button class="action green" onclick="allTalents(true)">전체 본능 MAX</button>
 </div>
+
+<div id="bulkMsg" class="msg"></div>
 </section>
 
 <section id="story" class="hidden">
 <h2>📖 스토리</h2>
-
 <div class="card">
 <label>스토리 항목</label>
 <input id="storyName" placeholder="스토리 항목 이름">
-<label style="margin-top:10px">값</label>
-<input id="storyValue" type="number" placeholder="값">
-<button class="action" onclick="applyStory()">적용</button>
-<div id="storyMessage" class="message"></div>
+<button class="action" onclick="storyApply()">적용</button>
+<div id="storyMsg" class="msg"></div>
 </div>
 </section>
 
 <section id="upload" class="hidden">
 <h2>⬆️ 저장 / 업로드</h2>
-
 <div class="card">
-<p class="small">
-현재 세이브에 적용한 커스텀 내용을 업로드합니다.
-</p>
-<button class="action blue" onclick="uploadSave()">세이브 업로드</button>
-<div id="uploadMessage" class="message"></div>
+<p class="small">현재 세이브에 적용된 내용을 업로드합니다.</p>
+<button class="action blue" onclick="uploadSave()">수정 세이브 저장 및 업로드</button>
+<div id="uploadMsg" class="msg"></div>
 </div>
 </section>
 
@@ -305,214 +203,169 @@ input,select{
 
 <aside class="panel right">
 <h3>계정 상태</h3>
-
-<div class="status">
-<span>상태</span>
-<strong id="state">대기</strong>
-</div>
-
-<div class="status">
-<span>국가</span>
-<strong id="stateCountry">KR</strong>
-</div>
-
-<div class="status">
-<span>세이브</span>
-<strong id="stateSave">없음</strong>
-</div>
-
-<div class="card" style="margin-top:15px">
-<div class="small">
-NCT NYANKO Custom Editor
-<br><br>
-실제 세이브 편집 API 연결
+<div class="status"><span>상태</span><strong id="status">대기</strong></div>
+<div class="status"><span>국가</span><strong id="countryStatus">KR</strong></div>
+<div class="status"><span>세이브</span><strong id="saveStatus">없음</strong></div>
 <br>
-캐릭터 / 재화 / 본능 / 스토리
+<div class="small">
+NCT NYANKO Custom<br>
+실제 세이브 편집 API<br>
+캐릭터 · 재화 · 본능 · 진화<br>
+전체 편집 · 세이브 업로드
 </div>
-</div>
-
-<a
-href="https://discord.gg/TP75TsSQf"
-target="_blank"
-style="display:block;text-align:center;text-decoration:none"
->
-<button class="action dark">Discord 커뮤니티</button>
+<a href="https://discord.gg/TP75TsSQf" target="_blank">
+<button class="action dark">💬 Discord 커뮤니티</button>
 </a>
-
 </aside>
 
 </div>
 
 <script>
-function menu(id,btn){
+const $=id=>document.getElementById(id);
+
+function show(id,btn){
  document.querySelectorAll("main section").forEach(x=>x.classList.add("hidden"));
- const target=document.getElementById(id);
- if(target) target.classList.remove("hidden");
-
- document.querySelectorAll(".side button,.nav button")
-   .forEach(x=>x.classList.remove("active"));
-
- if(btn) btn.classList.add("active");
+ $(id).classList.remove("hidden");
+ document.querySelectorAll(".nav button,.side button").forEach(x=>x.classList.remove("active"));
+ if(btn)btn.classList.add("active");
 }
 
 async function api(url,method="GET",body=null){
- const opt={method,headers:{"Content-Type":"application/json"}};
- if(body!==null) opt.body=JSON.stringify(body);
-
- const res=await fetch(url,opt);
- const data=await res.json();
-
- if(!res.ok){
-   throw new Error(data.message || data.error || "요청 실패");
- }
-
- return data;
+ const o={method,headers:{"Content-Type":"application/json"}};
+ if(body!==null)o.body=JSON.stringify(body);
+ const r=await fetch(url,o);
+ const d=await r.json();
+ if(!r.ok||d.ok===false)throw new Error(d.error||d.message||"요청 실패");
+ return d;
 }
 
 async function loadSave(){
- const box=document.getElementById("loadMessage");
-
  try{
-   box.textContent="불러오는 중...";
-
-   const data=await api("/api/load","POST",{
-     country:document.getElementById("country").value,
-     transfer:document.getElementById("transfer").value.trim(),
-     confirmation:document.getElementById("confirmation").value.trim()
-   });
-
-   box.textContent=data.message || data.summary || "세이브를 불러왔습니다.";
-
-   document.getElementById("state").textContent="정상";
-   document.getElementById("stateSave").textContent="불러옴";
-   document.getElementById("stateCountry").textContent=
-     document.getElementById("country").value.toUpperCase();
-
+  $("loadMsg").textContent="불러오는 중...";
+  const d=await api("/api/load","POST",{
+   country:$("country").value,
+   transfer:$("transfer").value.trim(),
+   confirmation:$("confirmation").value.trim()
+  });
+  $("loadMsg").textContent=JSON.stringify(d.summary,null,2);
+  $("status").textContent="정상";
+  $("saveStatus").textContent="불러옴";
+  $("countryStatus").textContent=$("country").value.toUpperCase();
  }catch(e){
-   box.textContent="❌ "+e.message;
-   document.getElementById("state").textContent="오류";
+  $("loadMsg").textContent="❌ "+e.message;
+  $("status").textContent="오류";
  }
 }
 
-async function setCatLevel(){
+async function catLevel(){
  try{
-   const data=await api("/api/cat/level","POST",{
-     id:Number(document.getElementById("catId").value),
-     base:document.getElementById("catBase").value===""
-       ? null
-       : Number(document.getElementById("catBase").value),
-     plus:document.getElementById("catPlus").value===""
-       ? null
-       : Number(document.getElementById("catPlus").value)
-   });
-
-   document.getElementById("catMessage").textContent=
-     data.message || JSON.stringify(data);
- }catch(e){
-   document.getElementById("catMessage").textContent="❌ "+e.message;
- }
+  const d=await api("/api/cat/level","POST",{
+   id:Number($("catId").value),
+   base:$("catBase").value===""?null:Number($("catBase").value),
+   plus:$("catPlus").value===""?null:Number($("catPlus").value)
+  });
+  $("catMsg").textContent=d.message;
+ }catch(e){$("catMsg").textContent="❌ "+e.message}
 }
 
-async function setOwned(value){
+async function catOwned(v){
  try{
-   const data=await api("/api/cat/owned","POST",{
-     id:Number(document.getElementById("catId").value),
-     owned:value
-   });
-
-   document.getElementById("catMessage").textContent=
-     data.message || "적용 완료";
- }catch(e){
-   document.getElementById("catMessage").textContent="❌ "+e.message;
- }
+  const d=await api("/api/cat/owned","POST",{id:Number($("catId").value),owned:v});
+  $("catMsg").textContent=d.message;
+ }catch(e){$("catMsg").textContent="❌ "+e.message}
 }
 
-async function setForm(form){
+async function catForm(v){
  try{
-   const url=form===3
-     ? "/api/cat/form"
-     : "/api/cat/form";
-
-   const data=await api(url,"POST",{
-     id:Number(document.getElementById("catId").value),
-     form:form
-   });
-
-   document.getElementById("catMessage").textContent=
-     data.message || "적용 완료";
- }catch(e){
-   document.getElementById("catMessage").textContent="❌ "+e.message;
- }
+  const d=await api("/api/cat/form","POST",{id:Number($("catId").value),form:v});
+  $("catMsg").textContent=d.message;
+ }catch(e){$("catMsg").textContent="❌ "+e.message}
 }
 
 async function catInfo(){
  try{
-   const data=await api(
-     "/api/cat/info?id="+
-     encodeURIComponent(document.getElementById("catId").value)
-   );
-
-   document.getElementById("catMessage").textContent=
-     data.message || data.info || JSON.stringify(data);
- }catch(e){
-   document.getElementById("catMessage").textContent="❌ "+e.message;
- }
+  const d=await api("/api/cat/info","POST",{id:Number($("catId").value)});
+  $("catMsg").textContent=
+   "ID: "+d.info.id+"\n"+
+   "이름: "+d.info.name+"\n"+
+   "보유: "+(d.info.unlocked?"예":"아니오");
+ }catch(e){$("catMsg").textContent="❌ "+e.message}
 }
 
-async function applyItem(){
+async function itemApply(){
  try{
-   const data=await api("/api/item","POST",{
-     item:document.getElementById("itemName").value.trim(),
-     value:Number(document.getElementById("itemValue").value)
-   });
-
-   document.getElementById("itemMessage").textContent=
-     data.message || "적용 완료";
- }catch(e){
-   document.getElementById("itemMessage").textContent="❌ "+e.message;
- }
+  const d=await api("/api/item","POST",{
+   item:$("itemName").value.trim(),
+   value:Number($("itemValue").value)
+  });
+  $("itemMsg").textContent=d.message;
+ }catch(e){$("itemMsg").textContent="❌ "+e.message}
 }
 
-async function applyTalent(){
+async function talentApply(){
  try{
-   const data=await api("/api/cat/talents","POST",{
-     id:Number(document.getElementById("talentCatId").value),
-     max_level:
-       document.getElementById("talentMax").value==="true"
-   });
-
-   document.getElementById("talentMessage").textContent=
-     data.message || "적용 완료";
- }catch(e){
-   document.getElementById("talentMessage").textContent="❌ "+e.message;
- }
+  const d=await api("/api/cat/talents","POST",{
+   id:Number($("talentCatId").value),
+   max_level:$("talentMax").value==="true"
+  });
+  $("talentMsg").textContent=d.message||"적용 완료";
+ }catch(e){$("talentMsg").textContent="❌ "+e.message}
 }
 
-async function applyStory(){
+async function specificTalent(){
  try{
-   const data=await api("/api/story","POST",{
-     item:document.getElementById("storyName").value.trim(),
-     value:Number(document.getElementById("storyValue").value)
-   });
+  const d=await api("/api/cat/talent/max","POST",{name:$("talentName").value.trim()});
+  $("talentMsg").textContent=d.message;
+ }catch(e){$("talentMsg").textContent="❌ "+e.message}
+}
 
-   document.getElementById("storyMessage").textContent=
-     data.message || "적용 완료";
- }catch(e){
-   document.getElementById("storyMessage").textContent="❌ "+e.message;
- }
+async function allLevel(){
+ try{
+  const d=await api("/api/cats/level/all","POST",{
+   base:$("allBase").value===""?null:Number($("allBase").value),
+   plus:$("allPlus").value===""?null:Number($("allPlus").value)
+  });
+  $("bulkMsg").textContent=d.message;
+ }catch(e){$("bulkMsg").textContent="❌ "+e.message}
+}
+
+async function allMax(plus){
+ try{
+  const d=await api("/api/cats/level/max","POST",{plus:plus});
+  $("bulkMsg").textContent=d.message;
+ }catch(e){$("bulkMsg").textContent="❌ "+e.message}
+}
+
+async function allForm(form){
+ try{
+  const d=await api("/api/cats/form/all","POST",{form:form});
+  $("bulkMsg").textContent=d.message;
+ }catch(e){$("bulkMsg").textContent="❌ "+e.message}
+}
+
+async function allTalents(max){
+ try{
+  const d=await api("/api/cats/talents/all","POST",{max_level:max});
+  $("bulkMsg").textContent=d.message;
+ }catch(e){$("bulkMsg").textContent="❌ "+e.message}
+}
+
+async function storyApply(){
+ try{
+  const d=await api("/api/story","POST",{item:$("storyName").value.trim()});
+  $("storyMsg").textContent=d.message;
+ }catch(e){$("storyMsg").textContent="❌ "+e.message}
 }
 
 async function uploadSave(){
  try{
-   const data=await api("/api/save/upload","POST",{});
-
-   document.getElementById("uploadMessage").textContent=
-     data.message || JSON.stringify(data);
- }catch(e){
-   document.getElementById("uploadMessage").textContent="❌ "+e.message;
- }
+  const d=await api("/api/save/upload","POST",{});
+  $("uploadMsg").textContent=
+   "✅ 업로드 완료\n\n"+
+   "이어하기 코드: "+d.transfer+"\n"+
+   "인증번호: "+d.confirmation;
+ }catch(e){$("uploadMsg").textContent="❌ "+e.message}
 }
 </script>
-
 </body>
 </html>
